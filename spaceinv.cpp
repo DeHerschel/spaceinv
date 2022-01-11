@@ -11,11 +11,31 @@
 #include "asteroid.h"
 #include "star.h"
 #include "enemy.h"
-
+#include <cwchar>
 using namespace std;
 
 int main() {
     SPACE space(100, 40);
+
+    space.gotoxy(space.limit_right / 2 - 15, space.limit_bottom / 2-7); cout << "P R E S S  E N T E R  T O  S T A R T";
+    space.gotoxy(space.limit_right / 2-2, space.limit_bottom / 2+1); cout << "S T A R T";
+
+    while (true) {
+        Sleep(50);
+        int c = _getch();
+      
+        space.gotoxy(space.limit_right / 2, space.limit_bottom / 2); cout << "         ";
+       
+        if ( c == 13) {
+            space.gotoxy(space.limit_right / 2 - 15, space.limit_bottom / 2 - 7); cout << "                                    ";
+            space.gotoxy(space.limit_right / 2 - 2, space.limit_bottom / 2 + 1); cout << "         ";
+            break;
+
+        }
+
+    }
+
+
     list<BULLET*> BULLETS;
     list<BULLET*>::iterator it;
     list<ASTEROID*> ASTEROIDS;
@@ -43,7 +63,24 @@ int main() {
     int points = 0;
     int count = 0; // Counts iterations to move enemys
     int dead = 0; 
+
     while (!game_over) {
+        bool pressed = false;
+        bool pulsation = false;
+        if (GetKeyState(27) & 0x8000) { // press enter to pause       
+            space.gotoxy(space.limit_right / 2 - 19, space.limit_bottom / 2 - 7); cout << "P R E S S  E N T E R  T O  C O N T I N U E";
+            space.gotoxy(space.limit_right / 2 - 5, space.limit_bottom / 2 + 1); cout << "C O N T I N U E";
+            while (true) {
+                Sleep(50);
+                if (GetKeyState(13) & 0x8000) {
+                    space.gotoxy(space.limit_right / 2 - 19, space.limit_bottom / 2 - 7); cout << "                                          ";
+                    space.gotoxy(space.limit_right / 2 - 5, space.limit_bottom / 2 + 1); cout << "             ";
+                    break;
+                }
+            }
+        }
+
+
         space.gotoxy(40, 37); std::cout << "     ";
         space.gotoxy(45, 37); std::cout << "Points" << std::endl;
         space.gotoxy(52, 37); std::cout << points << std::endl;
